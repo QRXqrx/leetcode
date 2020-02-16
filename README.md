@@ -11,3 +11,7 @@ Since it is for saving leetcode solutions, the project is named 'leetcode'. But 
   
 ## 2.programExercise
   Containing code I write when learning java. Under **leetcode**/src/main/java/edu/postgraduate/programExercise
+  
+
+## 3.test
+  For convenience, I write most of main codes, which can drive a program to run, using Junit 4. These code are under **leetcode**/src/test/java
