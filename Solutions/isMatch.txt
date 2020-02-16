@@ -1,0 +1,79 @@
+    /**
+     * @param s A string only contains 'publicStr'-'z'.
+     * @param p Simple regular expression pattern, containing 'publicStr'-'z', '.' and '*'.
+     * @return  The result of match.
+     *
+     *  This function's key point is (isMatch(s.substring(1), p)) || isMatch(s, p.substring(2))
+     *  This boolean expression is the description of the functionality of '*'
+     *  isMatch(s.substring(1), p) represent '*' repeat once and more than once, while
+     *  isMatch(s, p.substring(2) represent the situation when the char before '*' don't repeat.
+     */
+    // Ultimate answer.
+    public boolean isMatch(String s, String p) {
+        final char DOT = '.';
+        final char STAR = '*';
+
+        // Exit point.
+        if(p.isEmpty()) {
+            return s.isEmpty();
+        }
+
+        boolean isFirstMatch = ((!s.isEmpty()) && ((s.charAt(0) == p.charAt(0)) || (p.charAt(0) == DOT)));
+        if((p.length() > 1) && (p.charAt(1) == STAR)) {
+            return ((isFirstMatch && isMatch(s.substring(1), p)) || isMatch(s, p.substring(2)));
+        }
+
+        return (isFirstMatch && isMatch(s.substring(1), p.substring(1)));
+    }
+
+    // Silly answer.
+    public boolean isMatch(String s, String p) {
+        final char DOT = '.';
+        final char STAR = '*';
+
+
+        System.out.println("----------------------------");
+        System.out.println("s=" + s);
+        System.out.println("p=" + p);
+        System.out.println("----------------------------");
+        /*
+            Exit point1: Deal with null pattern. When pattern is null, only if string s is null then the result can be
+            true.
+         */
+        if(p.isEmpty()) {
+            return s.isEmpty();
+        }
+        /*
+            The match result of the first char will cause different control flow.
+         */
+        boolean isFirstMatch;
+        if(s.isEmpty()) { // When s is null, match result at the first char will always be false.
+            isFirstMatch = false;
+        } else { // When s is not null, compare the first char of pattern and the first char of s.
+            isFirstMatch = ((s.charAt(0) == p.charAt(0)) || (p.charAt(0) == DOT));
+        }
+
+        if(isFirstMatch) { // If the first char of s matches the first char of pattern.
+            if(p.length() > 1) {
+                if(p.charAt(1) == STAR) { // isMatch(s, p.substring(2)) This point is the most difficult for understand. 
+                    return (isMatch(s.substring(1), p) || isMatch(s, p.substring(2)));
+                } else {// Continue the match process normally.
+                    return isMatch(s.substring(1), p.substring(1));
+                }
+            } else {
+                return isMatch(s.substring(1), p.substring(1));
+            }
+        } else {
+            if(p.length() > 1) {
+                if(p.charAt(1) == STAR) {
+                    return isMatch(s, p.substring(2));
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+
+    

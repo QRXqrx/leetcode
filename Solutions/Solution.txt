@@ -1,0 +1,46 @@
+public class edu.postgraduate.leetcode.Solution {
+    public boolean isMatch(String s, String p) {
+        final char DOT = '.';
+        final char STAR = '*';
+
+        int index1 = 0, index2 = 0;
+
+        char last = ' ';
+        while((index1 < s.length()) && (index2 < p.length())) {
+            char sc = s.charAt(index1);
+            char pc = p.charAt(index2);
+
+            if(pc == DOT) {
+                last = pc;
+            } else if(pc == STAR) {
+                if((sc == last) || (last == DOT)) {
+                    index2--;
+                } else {
+                    index1--;
+                }
+            } else {
+                if(sc == pc) {
+                    last = pc;
+                } else {
+                    if(p.charAt(index2+1) == STAR) {
+                        index2++;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            index1++;
+            index2++;
+        }
+
+        if((index1 == s.length()) && (index2 == p.length())) {
+            return true;
+        }
+        if((index1 == s.length()) && ((index2 == p.length() - 1) && p.charAt(index2) == STAR)) {
+            return true;
+        }
+
+        return false;
+    }
+}
