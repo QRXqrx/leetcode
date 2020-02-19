@@ -5,12 +5,30 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 public class JavaTest {
+
+    public JavaTest() {
+        System.out.println(this);
+    }
+
+    @Test
+    public void testPrintClass1() {
+        new  JavaTest();
+        new  JavaTest();
+    }
+
+
+    @Test
+    public void testPrintClass() {
+        System.out.println(this);
+        System.out.println(this.getClass());
+        System.out.println(this.getClass().toString());
+    }
+
     // Try array
     @Test
     public void test0() {
