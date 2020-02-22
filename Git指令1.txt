@@ -1,0 +1,73 @@
+git init //开启版本库
+git status //查看当前版本控制任务的工作状态；查看合并分支时的冲突情况
+git add <file>//添加修改后文件（支持正则表达式），添加到暂存区
+git commit //提交修改到分支
+	para1: -m "modification" //添加版本说明
+git log //查看所有的版本提交记录
+	para1: --pretty=oneline //版本内容在一行内输出
+	para2: --graph //查看工作分支图
+	para3: --abbrev-commit //
+git diff //查看区别
+git reset //回退
+	git reset HEAD <file> //add后尚未commit时，使用这一指令回撤目标文件的修改
+	para1: --hard 
+		HEAD(head node: represent the latest version, version at present.)
+		HEAD^(version before now, last version)
+		HEAD~100(100th version from now)
+git reflog //查看命令历史，用于关机重启时还原之前的改动，避免版本id不可查的问题。
+git checkout //舍弃修改。让这个文件回到最近一次git commit或git add时的状态；可舍弃删除，但是不在版本库中的删除操作无法恢复
+	para1: -- //若无则意为“切换到另一分支”
+git rm <file>//从版本库中删除某文件（其实就是将删除操作stage），git add的类似操作
+
+git建立远程库
+	1.ssh-keygen -t rsa -C "youremail@example.com" \\建立.ssh文件。ssh秘钥generation
+	2.建立GitHub库
+	3.在本地工作区根据GitHub上的guide在终端输入命令行
+git remote add origin
+git push
+
+git克隆远程库
+	1.在GitHub上找到需要克隆的库
+	2.git clone git@github.com:<userName>/<repoName>.git
+	
+git创建分支
+git checkout -b dev //创建并切换到全新分支dev
+	作用等于：
+		1.git branch dev //创建全新分支dev
+		2.git checkout dev //切换到dev上
+git branch //查看当前分支
+	para1: -d <branchName>//删除名为branchName的分支
+git merge dev //将dev分支合并到master分支上
+	para1: --no (-ff for Fast Forward) //禁用...（在例子里面是禁用分支的Fast Foward）
+	/**
+	 notice: 禁用之后，再次合并分支时会提交一个commit，这时需要加上 -m 并添加说明
+	 e.g: $ git merge --no-ff -m "description" dev 
+	 关闭Fast Forward意味着合并不会将分支合并到master上，而是再单独形成一条汇合的分支。这
+	 样可以看出之前做过合并。
+	**/
+
+（好像这个命令没了，明天查一下）
+	git switch <branchName> //更科学的切换分支的命令行，无参数时表示“切换到已有分支”
+		para1: -c <branchName> //创建并切换到全新分支
+	查询后发现这个指令是最新版本独有的，安装了最新版的git之后解决问题。
+	
+git合并分支冲突：
+	出现冲突后手动解决冲突文件，按照fix confilct --> git add <file> --> git commit
+	--> git branch -d <file>的流程走。合并完成后要删除分支
+	
+use "git restore --staged <file>..." to unstage //新版本不再推荐用git reset HEAD <file>
+
+git保存未完成的工作现场
+git stash //用于保存当前的工作现场。紧急任务（如bug）修改完成后切回工作分支恢复场景即可。
+git stash list //查看保存工作现场的列表。
+git恢复工作现场
+	1.git stash apply + git stash drop
+		git stash apply + <workplaceCode> //恢复指定的工作现场。
+	2.git stash pop //直接输出恢复后的git status
+git cherry-pick <commitNum> //将一个分支上做的修改合并到另一个分支上
+	/**
+	 notice: 当从次分支合并修改到主分支上时，要先保存次分支上的修改，切换分支后使用
+			 这个命令。
+	**/
+
+	
