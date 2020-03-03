@@ -1,8 +1,9 @@
 package edu.postgraduate.programExercise.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Person {
+public class Person implements Serializable {
     String name;
     int age;
 
@@ -74,5 +75,15 @@ public class Person {
 
     public void eat(String food) {
         System.out.println("人可以吃" + food);
+    }
+
+    private String showNation(String nation) {
+        System.out.println("我的国籍是：" + nation);
+        return nation;
+    }
+
+
+    private static void showDesc() {
+        System.out.println("我是一个可爱的人...");
     }
 }

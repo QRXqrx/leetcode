@@ -4,6 +4,9 @@ import edu.postgraduate.programExercise.annotation.easycheck.Check;
 
 public class CaculatorDemo {
 
+    public CaculatorDemo() {
+    }
+
     @Check
     public void add() {
         String str = null;
